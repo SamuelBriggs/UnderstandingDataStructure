@@ -10,7 +10,8 @@ public class DoublyLinkedList {
     private Node tail = null;
 
 
-    public void setHead(Node node) {
+    public void setHead(int element) {
+        Node node = new Node(element);
         if (head == null){
             head = node;
             tail = node;
@@ -62,9 +63,52 @@ public class DoublyLinkedList {
     }
 
     public void add(int index, int element){
-
-
-
+        Node node = new Node(element);
+        if (index == 0) setHead(element);
+        else if (head.nextNode == null) return;
+        else {
+            int count = 1;
+            Node currentNode = head.nextNode;
+            while (count!= index){
+                currentNode = currentNode.nextNode;
+                count++;
+            }
+            if(currentNode == null) return;
+            node.previousNode = currentNode.previousNode;
+            currentNode.previousNode.nextNode = node;
+            node.nextNode = currentNode;
+            currentNode.previousNode = node;
+        }
 
     }
-}
+
+    public int size(){
+        if (head==null) return 0;
+        int count = 1;
+        Node currentNode = head.nextNode;
+        while (currentNode!= null) {
+            currentNode = currentNode.nextNode;
+            count++;
+        }
+        return count;
+    }
+
+    public int get(int index){
+        int count = 0;
+        Node currentNode = head;
+        while (count!=index) {
+            currentNode = currentNode.nextNode;
+            count++;
+        }
+        return currentNode.value;
+    }
+    public boolean contains(int element){
+        Node node = head;
+        while(node!=null){
+            if (node.value == element) return true;
+            else node = node.nextNode;
+        }
+        return false;
+    }
+
+    }
